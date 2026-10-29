@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | DTS - Diesel Technical Solution</title>
+<style>
+  :root{
+    --navy:#0a1a33;
+    --navy-2:#0e2340;
+    --blue:#1f5eff;
+    --blue-dark:#1749c9;
+    --ink:#13213a;
+    --muted:#5c6b85;
+    --line:#e7eaf1;
+    --paper:#ffffff;
+    --bg:#f7f8fb;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{text-decoration:none; color:inherit;}
+  ul{list-style:none;}
+  img,svg{display:block; max-width:100%;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 24px; border-radius:6px; font-weight:600; font-size:15px;
+    white-space:nowrap; transition:transform .15s ease, background .15s ease, color .15s ease;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--blue); color:#fff;}
+  .btn-primary:hover{background:var(--blue-dark);}
+  .btn-outline{background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.4);}
+  .btn-outline:hover{border-color:#fff; background:rgba(255,255,255,.06);}
+  .btn svg{width:16px; height:16px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:200;
+    background:#fff; border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    height:84px;
+  }
+  /* .logo{display:flex; align-items:center; gap:12px;}
+  .logo-mark{
+    width:46px; height:46px; border-radius:50%;
+    background:var(--navy); display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  } */
+   .logo-mark{
+  width: 90px;
+  height:90px;
+  border-radius:50%;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  background:#fff;
+  border:2px solid #dfe5ed;
+}
+
+.logo-mark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:50%;
+}
+  .logo-mark svg{width:24px; height:24px;}
+  .logo-text .name{font-size:22px; font-weight:800; color:var(--ink); letter-spacing:.5px; line-height:1;}
+  .logo-text .sub{font-size:10px; letter-spacing:1.5px; color:var(--muted); font-weight:600; margin-top:3px;}
+
+  .desktop-nav{display:flex; align-items:center; gap:clamp(14px,2vw,36px); flex-wrap:nowrap;}
+  .desktop-nav a{font-size:14.5px; font-weight:600; color:var(--ink); position:relative; padding:6px 0; white-space:nowrap;}
+  .desktop-nav a.active{color:var(--blue);}
+  .desktop-nav a.active::after{
+    content:''; position:absolute; left:0; right:0; bottom:-2px; height:2px; background:var(--blue);
+  }
+  .desktop-nav a:hover{color:var(--blue);}
+
+  .header-actions{display:flex; align-items:center; gap:22px;}
+  .burger{
+    display:none; width:44px; height:44px; align-items:center; justify-content:center;
+    background:none; border-radius:8px;
+  }
+  .burger svg{width:26px; height:26px;}
+
+  /* ---------- Mobile dropdown nav ---------- */
+  .mobile-nav{
+    position:fixed; inset:0; z-index:300;
+    background:#fff;
+    transform:translateY(-100%);
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column;
+    visibility:hidden;
+  }
+  .mobile-nav.open{transform:translateY(0); visibility:visible;}
+  .mobile-nav-top{
+    display:flex; align-items:center; justify-content:space-between;
+    height:84px; padding:0 24px; border-bottom:1px solid var(--line);
+  }
+  .mobile-nav-links{padding:8px 24px; overflow-y:auto; flex:1;}
+  .mobile-nav-links li{border-bottom:1px solid var(--line);}
+  .mobile-nav-links a{
+    display:block; padding:22px 4px; font-size:19px; font-weight:500; color:var(--ink);
+  }
+  .mobile-nav-links a.active{color:var(--blue); font-weight:700;}
+  .mobile-nav-cta{padding:20px 24px 28px; background:var(--navy);}
+  .mobile-nav-cta .btn{width:100%; justify-content:center;}
+  .close-btn{width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none;}
+  .close-btn svg{width:24px; height:24px;}
+  body.nav-open{overflow:hidden;}
+
+  /* ---------- About hero (diagonal) ---------- */
+  .about-hero{
+     background:
+    linear-gradient(
+      90deg,
+      rgba(3,12,25,0.55) 0%,
+      rgba(3,12,25,0.30) 45%,
+      rgba(3,12,25,0.15) 100%
+    ),
+    url("Images/aboutus.jpg") center center / cover no-repeat;
+    /* position:relative; overflow:hidden;
+    background:linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%);
+    color:#fff; */
+     color:#fff;
+  position:relative;
+  overflow:visible;
+  }
+  .about-hero-grid{
+    display:grid; grid-template-columns:1fr 1fr; align-items:stretch; min-height:400px;
+  }
+  .about-hero-text{
+    padding:76px 0 76px 0; display:flex; flex-direction:column; justify-content:center;
+    position:relative; z-index:2;
+  }
+  .about-hero-text .inner{max-width:480px; padding-left:32px;}
+  .eyebrow{color:#5b9bff; font-weight:700; font-size:13.5px; letter-spacing:.3px; margin-bottom:14px;}
+  .about-hero-text h1{
+    font-size:40px; line-height:1.16; font-weight:800; letter-spacing:-.5px; margin-bottom:16px;
+  }
+  .rule{width:56px; height:3px; background:var(--blue); border-radius:2px; margin-bottom:18px;}
+  .about-hero-text p{color:#b7c0d4; font-size:15.5px; max-width:440px;}
+
+  .about-hero-img{
+    position:relative;
+    clip-path:polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+    background:radial-gradient(circle at 35% 30%, #24406b, #081428 78%);
+  }
+  .about-hero-img svg{width:100%; height:100%; position:absolute; inset:0;}
+
+  /* ---------- Who we are ---------- */
+  .who-section{padding:76px 0 60px; background:var(--bg);}
+  .section-head{text-align:center; max-width:680px; margin:0 auto 46px;}
+  .section-head h2{font-size:30px; font-weight:800; color:var(--ink); margin-bottom:14px; letter-spacing:-.3px; position:relative; display:inline-block;}
+  .section-head h2 .rule{margin:14px auto 0;}
+  .section-head p{color:var(--muted); font-size:15px;}
+
+  .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .stat-card{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:26px 22px;
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .stat-card:hover{box-shadow:0 14px 30px -18px rgba(20,30,60,.25); transform:translateY(-2px);}
+  .stat-top{display:flex; align-items:center; gap:14px; margin-bottom:10px;}
+  .stat-icon{
+    width:46px; height:46px; border-radius:50%; background:#eaf0ff; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .stat-icon svg{width:22px; height:22px; stroke:var(--blue);}
+  .stat-top .num{font-size:26px; font-weight:800; color:var(--ink); line-height:1;}
+  .stat-card .label{font-size:14px; font-weight:700; margin-bottom:6px;}
+  .stat-card .desc{font-size:13.5px; color:var(--muted);}
+
+  /* ---------- Mission / Vision ---------- */
+  .mv-section{padding:16px 0 76px; background:var(--bg);}
+  .mv-panel{
+    background:#eef1f6; border-radius:16px; padding:32px; display:grid; grid-template-columns:1fr 1.3fr; gap:36px; align-items:center;
+  }
+  .mv-image{
+    border-radius:12px; overflow:hidden; aspect-ratio:4/3;
+    background:radial-gradient(circle at 30% 20%, #1c3357, #060f20 80%);
+    position:relative;
+  }
+  .mv-image svg{width:100%; height:100%;}
+  .mv-block + .mv-block{margin-top:26px;}
+  .mv-block h3{font-size:19px; font-weight:800; color:var(--ink); margin-bottom:8px;}
+  .mv-block p{font-size:14.5px; color:var(--muted); max-width:520px;}
+
+  /* ---------- Values strip ---------- */
+  .values-bar{background:var(--navy); color:#fff;}
+  .values-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:24px; padding:40px 0;
+  }
+  .value-item{display:flex; align-items:center; gap:16px;}
+  .value-icon{
+    width:52px; height:52px; border-radius:50%; border:1.5px solid rgba(255,255,255,.35);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .value-icon svg{width:22px; height:22px; stroke:#fff;}
+  .value-item h4{font-size:15.5px; font-weight:700; margin-bottom:4px;}
+  .value-item p{font-size:13px; color:#9fabc4; margin:0;}
+
+  footer{background:var(--navy-2); color:#8b98b6; text-align:center; padding:26px 0; font-size:13px;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:840px){
+    .desktop-nav, .header-actions{display:none;}
+    .burger{display:flex;}
+    .nav-row{height:76px;}
+
+    .about-hero-grid{grid-template-columns:1fr;}
+    .about-hero-text{padding:48px 0 0;}
+    .about-hero-text .inner{padding-left:20px; padding-right:20px; max-width:100%;}
+    .about-hero-text h1{font-size:30px;}
+    .about-hero-img{
+      clip-path:none; aspect-ratio:16/9; margin-top:28px;
+    }
+    .stats-grid{grid-template-columns:1fr 1fr;}
+    .mv-panel{grid-template-columns:1fr; padding:22px;}
+    .values-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:600px){
+    .wrap{padding:0 20px;}
+    .about-hero-text h1{font-size:27px;}
+    .stats-grid{grid-template-columns:1fr;}
+    .values-grid{grid-template-columns:1fr;}
+    .section-head h2{font-size:25px;}
+  }
+/* --------------------------- */
+.map-section {
+  padding: 60px 20px;
+  background: #f5f7fa;
+  text-align: center;
+}
+
+.map-section h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #0a1a33;
+}
+
+.address {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 400px;
+  border: 0;
+}
+/* ----------------- */
+ .site-footer{
+    background:var(--navy);
+    color:#c3cadb;
+    position:relative;
+  }
+  .site-footer::before{
+    content:'';
+    display:block;
+    height:3px;
+    background:linear-gradient(90deg, var(--blue) 0%, #5b9bff 45%, transparent 100%);
+  }
+  .footer-top{
+    padding:64px 0 48px;
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr 1.2fr;
+    gap:48px;
+  }
+  .footer-brand .brand-mark{
+    display:flex; align-items:center; gap:12px; margin-bottom:18px;
+  }
+  .footer-brand .brand-mark .mark{
+    width:42px; height:42px; border-radius:10px; background:var(--blue);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .footer-brand .brand-mark .mark svg{width:22px; height:22px; stroke:#fff;}
+  .footer-brand .brand-mark .brand-name{font-size:19px; font-weight:800; color:#fff; letter-spacing:.3px;}
+  .footer-brand p{font-size:13.5px; line-height:1.75; color:#93a0bd; max-width:320px;}
+
+  .footer-heading{
+    font-size:12.5px; font-weight:700; letter-spacing:.6px; color:#fff;
+    margin-bottom:20px; position:relative; padding-bottom:12px;
+  }
+  .footer-heading::after{
+    content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; background:var(--blue);
+  }
+  .footer-links li{margin-bottom:13px;}
+  .footer-links a{
+    font-size:13.5px; color:#93a0bd; transition:color .15s ease, padding-left .15s ease;
+    display:inline-block;
+  }
+  .footer-links a:hover{color:#fff; padding-left:3px;}
+
+  .footer-contact li{
+    display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:13.5px; color:#93a0bd; line-height:1.6;
+  }
+  .footer-contact svg{width:17px; height:17px; stroke:#5b9bff; flex-shrink:0; margin-top:2px;}
+  .footer-contact a:hover{color:#fff;}
+
+  .footer-social{display:flex; gap:10px; margin-top:22px;}
+  .footer-social a{
+    width:36px; height:36px; border-radius:8px; border:1px solid rgba(255,255,255,.14);
+    display:flex; align-items:center; justify-content:center;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .footer-social a svg{width:16px; height:16px; stroke:#c3cadb;}
+  .footer-social a:hover{background:var(--blue); border-color:var(--blue);}
+  .footer-social a:hover svg{stroke:#fff;}
+
+  .footer-bottom-bar{
+    border-top:1px solid rgba(255,255,255,.09);
+    padding:22px 0;
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .footer-bottom-bar p{font-size:12.5px; color:#7c88a5;}
+  .footer-bottom-links{display:flex; gap:22px;}
+  .footer-bottom-links a{font-size:12.5px; color:#7c88a5;}
+  .footer-bottom-links a:hover{color:#fff;}
+
+  @media (max-width:960px){
+    .wrap{padding:0 24px;}
+    .footer-top{grid-template-columns:1fr 1fr; row-gap:40px; gap:28px;}
+  }
+
+  @media (max-width:600px){
+    .wrap{padding:0 20px;}
+    .footer-top{
+      grid-template-columns:1fr;
+      padding:44px 0 32px;
+      gap:34px;
+      text-align:center;
+    }
+    .footer-brand .brand-mark{justify-content:center;}
+    .footer-brand p{max-width:none; margin:0 auto;}
+    .footer-social{justify-content:center;}
+    .footer-heading::after{left:50%; transform:translateX(-50%);}
+    .footer-links,.footer-contact{display:inline-block; text-align:left;}
+    .footer-contact li{justify-content:flex-start;}
+    .footer-bottom-bar{
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap:12px;
+      padding:20px 0 28px;
+    }
+    .footer-bottom-links{justify-content:center;}
+  }
+
+  @media (max-width:380px){
+    .wrap{padding:0 16px;}
+    .footer-top{padding:36px 0 28px; gap:30px;}
+    .footer-brand .brand-mark .brand-name{font-size:17px;}
+    .footer-social a{width:34px; height:34px;}
+  }
+
+
+
+
+/* ----------------- */
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+   <a href="index.html" class="logo">
+     
+      <span class="logo-mark">
+  <img src="Images/logo.png" alt="DTS Logo">
+</span>
+     
+    </a>
+
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="products.html">Products</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="faq.html">FAQ'S</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="get-a-quote.html" class="btn btn-primary" style="background:var(--blue); color:#fff; padding:11px 18px; font-size:14px;">
+        Get a Quote
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <button class="burger" id="burgerBtn" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0a1a33" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile dropdown nav -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-top">
+    <a href="index.html" class="logo">
+     
+      <span class="logo-mark">
+  <img src="Images/logo.png" alt="DTS Logo">
+</span>
+     
+    </a>
+    <button class="close-btn" id="closeBtn" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0a1a33" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <ul class="mobile-nav-links">
+    <li><a href="index.html" class="mobile-link">Home</a></li>
+    <li><a href="about.html" class="mobile-link active">About Us</a></li>
+    <li><a href="services.html" class="mobile-link">Services</a></li>
+    <li><a href="products.html" class="mobile-link">Products</a></li>
+    <li><a href="index.html#gallery" class="mobile-link">Gallery</a></li>
+    <li><a href="faq.html" class="mobile-link">FAQ'S</a></li>
+    <li><a href="contact.html" class="mobile-link">Contact Us</a></li>
+  </ul>
+
+  <div class="mobile-nav-cta">
+    <a href="get-a-quote.html" class="btn btn-primary">Get a Quote</a>
+  </div>
+</div>
+
+<!-- About Hero -->
+<section class="about-hero">
+  <div class="about-hero-grid">
+    <div class="about-hero-text">
+      <div class="inner">
+        <div class="eyebrow">ABOUT US</div>
+        <h1>Powering Performance.<br>Delivering Trust.</h1>
+        <div class="rule"></div>
+        <p>DTS Diesel Technical Solution is a trusted partner in the diesel engine industry, delivering expert solutions with a commitment to quality, reliability and customer satisfaction.</p>
+      </div>
+    </div>
+    <!-- <div class="about-hero-img">
+      <svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="metal2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#3a557f"/>
+            <stop offset="100%" stop-color="#132743"/>
+          </linearGradient>
+        </defs>
+        <rect x="120" y="150" width="420" height="170" rx="10" fill="url(#metal2)"/>
+        <rect x="150" y="95" width="65" height="65" rx="8" fill="#24406b"/>
+        <rect x="235" y="95" width="65" height="65" rx="8" fill="#24406b"/>
+        <rect x="320" y="95" width="65" height="65" rx="8" fill="#24406b"/>
+        <rect x="405" y="95" width="65" height="65" rx="8" fill="#24406b"/>
+        <circle cx="500" cy="260" r="60" fill="#1a3155" stroke="#4d6ea0" stroke-width="4"/>
+        <circle cx="500" cy="260" r="15" fill="#0a1a33"/>
+        <rect x="120" y="305" width="420" height="26" rx="6" fill="#0e2340"/>
+        <g stroke="#4d6ea0" stroke-width="3" fill="none">
+          <path d="M182 150 V115"/>
+          <path d="M267 150 V115"/>
+          <path d="M352 150 V115"/>
+          <path d="M437 150 V115"/>
+        </g>
+      </svg>
+    </div> -->
+  </div>
+</section>
+
+<!-- Who We Are -->
+<section class="who-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Who We Are<div class="rule"></div></h2>
+      <p>With years of experience and a team of skilled professionals, we provide end-to-end diesel engine solutions for industrial, marine and power generation sectors. Our focus is simple &mdash; deliver the right solution, on time, every time.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="num">10+</span>
+        </div>
+        <div class="label">Years of Experience</div>
+        <div class="desc">A decade of delivering reliable diesel engine solutions.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg></span>
+          <span class="num">500+</span>
+        </div>
+        <div class="label">Happy Clients</div>
+        <div class="desc">Trusted by 500+ clients across various industries.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span class="num">1000+</span>
+        </div>
+        <div class="label">Engines Serviced</div>
+        <div class="desc">Successfully serviced and overhauled 1000+ engines.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5 7 22l5-3 5 3-1.5-9.5"/></svg></span>
+          <span class="num">100%</span>
+        </div>
+        <div class="label">Quality Commitment</div>
+        <div class="desc">Committed to quality, safety and customer satisfaction.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission / Vision -->
+<section class="mv-section">
+  <div class="wrap">
+    <div class="mv-panel">
+       <div class="mv-image">
+      <img src="Images/about-1.jpg" alt="Company image" style="width:100%; height:100%; object-fit:cover;">
+        
+      </div> 
+      <div>
+        <div class="mv-block">
+          <h3>Our Mission</h3>
+          <p>To deliver innovative and reliable diesel engine solutions that maximize performance, minimize downtime and create long-term value for our customers.</p>
+        </div>
+        <div class="mv-block">
+          <h3>Our Vision</h3>
+          <p>To be a leading global provider of diesel engine solutions, recognized for our technical excellence, integrity and customer-centric approach.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Values strip -->
+<section class="values-bar">
+  <div class="wrap">
+    <div class="values-grid">
+      <div class="value-item">
+        <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg></span>
+        <div><h4>Integrity</h4><p>We conduct our business with honesty and transparency.</p></div>
+      </div>
+      <div class="value-item">
+        <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <div><h4>Customer Focus</h4><p>We put our customers' needs at the heart of everything we do.</p></div>
+      </div>
+      <div class="value-item">
+        <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        <div><h4>Excellence</h4><p>We strive for excellence in every solution and service we deliver.</p></div>
+      </div>
+      <div class="value-item">
+        <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z"/></svg></span>
+        <div><h4>Safety First</h4><p>We prioritize safety for our team, clients and the environment.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ----------------- -->
+<section class="map-section">
+  <div class="container">
+    <h2>Our Location</h2>
+    <p class="address">
+      Diesel Technical Solution <br>
+      Hyderabad, Telangana, India
+    </p>
+
+    <div class="map-container">
+      <iframe 
+        src="https://www.google.com/maps?q=Vijayawada,Andhra+Pradesh&output=embed"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+
+<!-- --------------------- -->
+
+<footer class="site-footer">
+  <div class="wrap footer-top">
+
+    <!-- Brand -->
+    <div class="footer-brand">
+      <div class="brand-mark">
+        <span class="mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="7" width="15" height="10" rx="1"/><path d="M16 10h4l3 3v4h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18.5" cy="19" r="2"/></svg>
+        </span>
+        <span class="brand-name">DTS &mdash; Diesel Technical Solution</span>
+      </div>
+      <p>Reliable engine overhauling, maintenance and genuine spare parts, backed by an experienced service team you can count on.</p>
+
+      <div class="footer-social">
+        <!-- <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9v12M10 13.5c0-2.5 2-4.5 4.5-4.5S19 11 19 13.5V21h-4v-6.5a1.5 1.5 0 0 0-3 0V21h-4z"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h-2a5 5 0 0 0-5 5v2H6v4h2v7h4v-7h3l1-4h-4V8a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor" stroke="none"/></svg></a> -->
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <div class="footer-heading">QUICK LINKS</div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Services -->
+    <div class="footer-col">
+      <div class="footer-heading">OUR SERVICES</div>
+      <ul class="footer-links">
+        <li><a href="services.html">Engine Overhauling</a></li>
+        <li><a href="services.html">Engine Maintenance</a></li>
+        <li><a href="services.html">Spare Parts Supply</a></li>
+        <li><a href="services.html">Onsite Service</a></li>
+        <li><a href="services.html">AMC &amp; Service Contracts</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+       <div class="footer-col">
+      <div class="footer-heading">CONTACT INFO</div>
+      <ul class="footer-contact">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>2-2-128/G/100/1,PLOT NO 100, Sai Baba nagar colony, Road No.1, Laxma Reddy Colony, Uppal, Hyderabad, <br>Telangana &ndash; 500039, India</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 3a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .6a2 2 0 0 1 1.7 2z"/></svg>
+          <span><a href="tel:+919491435957">+91 94914 35957</a><br><a href="tel:+91 8121312253">+91 81213 12253</a></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7L22 6"/></svg>
+          <span><a href="mailto: dieseltechniaclsolutions@zohomail.in"> dieseltechniaclsolutions@zohomail.in</a><br> </span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="wrap footer-bottom-bar">
+    <p>&copy; 2026 DTS &mdash; Diesel Technical Solution. All rights reserved.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const burgerBtn = document.getElementById('burgerBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const mobileNav = document.getElementById('mobileNav');
+
+  function openNav(){
+    mobileNav.classList.add('open');
+    document.body.classList.add('nav-open');
+  }
+  function closeNav(){
+    mobileNav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+
+  burgerBtn.addEventListener('click', openNav);
+  closeBtn.addEventListener('click', closeNav);
+  document.querySelectorAll('.mobile-link').forEach(link=>{
+    link.addEventListener('click', closeNav);
+  });
+</script>
+
+</body>
+</html>
